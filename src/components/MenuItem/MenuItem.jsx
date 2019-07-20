@@ -3,9 +3,14 @@ import "./menuItem.scss";
 
 const MenuItem = (props) => {
   return (
-    <div style={{backgroundImage: `url(${props.image})`, backgroundSize: "cover", backgroundPosition: "center"}} className={`${props.size} menu-item`}>
+    <div className={`${props.size} menu-item`}>
+      <div
+        className="background-image"
+        style={{backgroundImage: `url(${props.image})`}}
+      >
+      </div>
       <div className="content">
-        <h1 className="title">{props.title}</h1>
+        <h1 className="title">{props.title.toUpperCase()}</h1>
         <span className="subtitle">Shop Now</span>
       </div>
     </div>
