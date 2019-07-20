@@ -23,13 +23,13 @@ class Directory extends Component {
       {
         title: 'women',
         imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
-        size: 'large',
+        size: "large",
         id: 4
       },
       {
         title: 'men',
         imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
-        size: 'large',
+        size: "large",
         id: 5
       }
     ]
@@ -39,7 +39,7 @@ class Directory extends Component {
     return (
       <div className="directory-menu">
         {this.state.sections.map(section => {
-          return <MenuItem key={section.id} title={section.title} image={section.imageUrl}/>
+          return <MenuItem key={section.id} title={section.title} image={section.imageUrl} size={section.size}/>
         })}
       </div>
     );
