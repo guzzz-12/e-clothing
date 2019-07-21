@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "./signIn.scss";
 import FormInput from '../FormInput/FormInput';
 import CustomBtn from '../CustomButton/CustomBtn';
-import {signInWithGoogle} from "../../firebase/fiebaseUtils";
+import {signInWithGoogle, auth} from "../../firebase/fiebaseUtils";
 
 class SignIn extends Component {
   state = {
@@ -10,12 +10,17 @@ class SignIn extends Component {
     password: ""
   }
 
-  submitHandler = (e) => {
+  submitHandler = async (e) => {
     e.preventDefault();
-    this.setState({
-      email: "",
-      password: ""
-    })
+    try {
+      await auth.signInWithEmailAndPassword(this.state.email, this.state.password);
+      this.setState({
+        email: "",
+        password: ""
+      })
+    } catch(error) {
+      console.log("Error loging in", error.message)
+    }
   }
 
   onChangeHandler = (e) => {
@@ -47,7 +52,7 @@ class SignIn extends Component {
             onChangeHandler={this.onChangeHandler}
           />
           <div className="buttons">
-            <CustomBtn type="submit">Submit</CustomBtn>
+            <CustomBtn type="submit">Sign in</CustomBtn>
             <CustomBtn onClick={signInWithGoogle} isGoogleSignedIn>Sign in with Google</CustomBtn>
           </div>
         </form>
