@@ -11,9 +11,7 @@ const PreviewCollection = (props) => {
           return (
             <CollectionItem
               key={item.id}
-              imageUrl={item.imageUrl}
-              name={item.name}
-              price={item.price}
+              item={item}
             />
           )
         }).slice(0, 4)}
