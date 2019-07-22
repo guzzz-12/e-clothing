@@ -5,7 +5,7 @@ import {Route, Switch} from "react-router-dom";
 import Shop from './pages/Shop/Shop';
 import Header from './components/Header/Header';
 import SignIn_SignUp from './pages/SignIn_SignUp/SignIn_SignUp';
-import {auth, createUserProfileDocument} from "./firebase/fiebaseUtils";
+import {auth, createUserProfileDocument} from "./firebase/firebaseUtils";
 
 class App extends React.Component {
   state = {

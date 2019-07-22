@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "./signUp.scss";
 import FormInput from '../FormInput/FormInput';
 import CustomBtn from '../CustomButton/CustomBtn';
-import {auth, createUserProfileDocument} from "../../firebase/fiebaseUtils";
+import {auth, createUserProfileDocument} from "../../firebase/firebaseUtils";
 
 class SignUp extends Component {
   state = {

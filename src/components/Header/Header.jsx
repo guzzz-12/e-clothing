@@ -2,7 +2,7 @@ import React from 'react';
 import "./header.scss";
 import {Link} from "react-router-dom";
 import {ReactComponent as HeaderLogo} from "../../assets/crown.svg";
-import {auth} from "../../firebase/fiebaseUtils";
+import {auth} from "../../firebase/firebaseUtils";
 
 const Header = (props) => {
   return (
