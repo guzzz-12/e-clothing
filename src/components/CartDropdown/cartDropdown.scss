@@ -12,10 +12,21 @@
   z-index: 5;
 
   .cart-items {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 240px;
     overflow-y: scroll;
+
+  }
+  
+  .empty-message {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    align-self: center;
+    font-size: 18px;
+    font-weight: bold;
   }
 
   button {
