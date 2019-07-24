@@ -5,10 +5,18 @@ import {showHideDropdown} from "../../redux/cart/cartAction";
 import {connect} from "react-redux";
 
 const CartIcon = (props) => {
+  const itemsCounter = () => {
+    let count = 0;
+    for(let item of props.itemCount) {
+      count = count + item.quantity;
+    };
+    return count;
+  }
+
   return (
     <div className="cart-icon" onClick={() => props.toggleDropdown()}>
       <ShoppingIcon className="shopping-icon"/>
-      <span className="item-count">0</span>
+      <span className="item-count">{itemsCounter()}</span>
     </div>
   );
 };
@@ -21,4 +29,10 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(CartIcon);
+const mapStateToProps = (state) => {
+  return {
+    itemCount: state.cartDropdown.cartItems
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
