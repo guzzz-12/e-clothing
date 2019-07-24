@@ -1,5 +1,5 @@
 import {cartActionTypes} from "./cartTypes";
-import {addItemToCart} from "./cartUtilities";
+import {addItemToCart, removeItemFromCart} from "./cartUtilities";
 
 const initialState = {
   showDropdown: false,
@@ -11,20 +11,26 @@ const cartReducer = (state = initialState, action) => {
     case cartActionTypes.SHOW_HIDE_DROPDOWN:
       return {...state, showDropdown: !state.showDropdown}
     case cartActionTypes.ADD_ITEM:
-      let cartItems = [];
+      let addedCartItems = [];
       const itemExists = state.cartItems.find(cartItem => {
         return cartItem.id === action.payload.id;
       });      
       if(itemExists) {
-        cartItems = addItemToCart(state.cartItems, itemExists);
+        addedCartItems = addItemToCart(state.cartItems, itemExists);
       } else {
         let item = {...action.payload, quantity: 1};
-        cartItems = [...state.cartItems, item]
+        addedCartItems = [...state.cartItems, item]
       }
       return {
-        ...state,
-        cartItems
+        ...state, cartItems: addedCartItems
       }
+    case cartActionTypes.SUBTRACT_ITEM:
+      let subtractedCartItems = [];
+      const itemToUpdate = state.cartItems.find(cartItem => {
+        return cartItem.id === action.payload.id
+      })
+      subtractedCartItems = removeItemFromCart(state.cartItems, itemToUpdate);
+      return {...state, cartItems: subtractedCartItems}
     case cartActionTypes.REMOVE_ITEM:
       const filteredItems = state.cartItems.filter(item => {
         return item.id !== action.payload
