@@ -2,7 +2,9 @@ import React from 'react';
 import "./cartDropdown.scss";
 import CustomBtn from "../CustomButton/CustomBtn";
 import {connect} from "react-redux";
-import CartItem from '../Cart-Item/Cart-Item';
+import CartItem from "../Cart-Item/Cart-Item";
+import {withRouter} from "react-router-dom";
+import {showHideDropdown} from "../../redux/cart/cartAction";
 
 const CartDropdown = (props) => {
   return (
@@ -16,7 +18,15 @@ const CartDropdown = (props) => {
           : <span className="empty-message">Shopping cart is empty</span>
         }
       </div>
-      <CustomBtn>Go to checkout</CustomBtn>
+      <CustomBtn
+        onClick={() => {
+            props.history.push("/checkout")
+            props.hideDropdown()
+          }
+        }
+      >
+        Go to checkout
+      </CustomBtn>
     </div>
   );
 };
@@ -27,4 +37,12 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(CartDropdown);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    hideDropdown: () => {
+      dispatch(showHideDropdown())
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartDropdown));
