@@ -11,6 +11,13 @@ const Checkout = (props) => {
     };
     return count;
   }
+
+  const renderItems = (items) => {
+    return items.map(item => {
+      return <CheckoutItem key={item.id} item={item} quantity={item.quantity} />
+    })
+  }
+
   return (
     <div className="checkout-page">
       <div className="checkout-header">
@@ -30,9 +37,7 @@ const Checkout = (props) => {
           <span>Remove</span>
         </div>
       </div>
-      {props.items.map(item => {
-        return <CheckoutItem key={item.id} item={item} />
-      })}
+      {renderItems(props.items)}
       <div className="total">
         <span>Total: ${totalPrice()}</span>
       </div>
