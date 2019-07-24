@@ -4,6 +4,10 @@ import {connect} from "react-redux";
 import {removeItem, addItem, subtractItem} from "../../redux/cart/cartAction";
 
 const CheckoutItem = (props) => {
+  if (props.quantity === 0) {
+    return null;
+  }
+  
   return (
     <div className="checkout-item">
       <div className="image-container">
