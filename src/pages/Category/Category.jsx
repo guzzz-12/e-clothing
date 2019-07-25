@@ -12,7 +12,7 @@ const Category = (props) => {
 
   return (
     <div className="collection-page">
-      <h2 className="title" style={{textTransform: "capitalize"}}>{props.match.params.category}</h2>
+      <h2 className="title">{props.categoryTitle}</h2>
       <div className="items">
         {renderItems()}
       </div>
@@ -22,13 +22,16 @@ const Category = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   let displayCategory = [];
+  let categoryTitle = null;
   for(let category of state.shopData) {
     if(category.routeName === ownProps.match.params.category) {
-      displayCategory = category.items
+      displayCategory = category.items;
+      categoryTitle = category.title;
     }
   }
   return {
-    categoryItems: displayCategory
+    categoryItems: displayCategory,
+    categoryTitle
   }
 }
 
