@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import {removeItem, addItem, subtractItem} from "../../redux/cart/cartAction";
 
 const CheckoutItem = (props) => {
-  if (props.quantity === 0) {
-    return null;
+  if (props.quantity <= 0) {
+    props.removeItem(props.item);
   }
   
   return (
