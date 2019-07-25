@@ -21,17 +21,10 @@ const Category = (props) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let displayCategory = [];
-  let categoryTitle = null;
-  for(let category of state.shopData) {
-    if(category.routeName === ownProps.match.params.category) {
-      displayCategory = category.items;
-      categoryTitle = category.title;
-    }
-  }
+  const selectedCategory = state.shopData[ownProps.match.params.category];
   return {
-    categoryItems: displayCategory,
-    categoryTitle
+    categoryItems: selectedCategory.items,
+    categoryTitle: selectedCategory.title
   }
 }
 

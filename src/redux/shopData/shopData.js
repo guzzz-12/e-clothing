@@ -1,5 +1,5 @@
-const initialState = [
-  {
+const initialState = {
+  hats: {
     id: 1,
     title: 'Hats',
     routeName: 'hats',
@@ -60,7 +60,7 @@ const initialState = [
       }
     ]
   },
-  {
+  sneakers: {
     id: 2,
     title: 'Sneakers',
     routeName: 'sneakers',
@@ -115,7 +115,7 @@ const initialState = [
       }
     ]
   },
-  {
+  jackets: {
     id: 3,
     title: 'Jackets',
     routeName: 'jackets',
@@ -152,7 +152,7 @@ const initialState = [
       }
     ]
   },
-  {
+  women: {
     id: 4,
     title: 'Women',
     routeName: 'women',
@@ -201,7 +201,7 @@ const initialState = [
       }
     ]
   },
-  {
+  men: {
     id: 5,
     title: 'Men',
     routeName: 'men',
@@ -244,7 +244,7 @@ const initialState = [
       }
     ]
   }
-];
+};
 
 const shopDataReducer = (state = initialState, action) => {
   switch(action.type) {
