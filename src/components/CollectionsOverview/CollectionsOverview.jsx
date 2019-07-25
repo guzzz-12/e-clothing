@@ -4,9 +4,10 @@ import {connect} from "react-redux";
 import PreviewCollection from "../PreviewCollection/PreviewCollection";
 
 const CollectionsOverview = (props) => {
+  const collectionsArray = Object.values(props.collections);
   return (
     <div className="collections-overview">
-      {props.collections.map(collection => {
+      {collectionsArray.map(collection => {
         return (
           <PreviewCollection
             key={collection.id}
