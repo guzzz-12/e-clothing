@@ -1,4 +1,4 @@
-export const shopData = [
+const initialState = [
   {
     id: 1,
     title: 'Hats',
@@ -244,4 +244,13 @@ export const shopData = [
       }
     ]
   }
-]
+];
+
+const shopDataReducer = (state = initialState, action) => {
+  switch(action.type) {
+    default:
+      return state
+  }
+}
+
+export default shopDataReducer;
