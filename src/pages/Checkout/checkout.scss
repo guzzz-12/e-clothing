@@ -28,4 +28,19 @@
     margin-left: auto;
     font-size: 36px;
   }
+
+  .test-warning {
+    padding: 16px;
+    text-align: center;
+    margin: 30px 0;
+    font-size: 20px;
+    color: red;
+    border: 1px solid red;
+    border-radius: 10px;
+
+    p {
+      margin: 10px 0 0 0;
+      font-weight: bold;
+    }
+  }
 }
