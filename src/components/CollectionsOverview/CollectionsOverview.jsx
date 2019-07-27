@@ -6,6 +6,10 @@ import {firestore, convertSnapshot} from "../../firebase/firebaseUtils";
 import { getShopDataFromFirestore } from '../../redux/shopData/shopDataAction';
 
 class CollectionsOverview extends React.Component {
+  state = {
+    loading: true
+  }
+
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
@@ -20,7 +24,7 @@ class CollectionsOverview extends React.Component {
         collectionsObj[collection.routeName] = collection
       }
 
-      // this.setState({loading: false})
+      this.setState({loading: false})
       this.props.getShopData(collectionsObj)
     })
   }
@@ -32,18 +36,24 @@ class CollectionsOverview extends React.Component {
   render() {
     const collectionsArray = Object.values(this.props.collections);
     return (
-      <div className="collections-overview">
-        {collectionsArray.map(collection => {
-          return (
-            <PreviewCollection
-              key={collection.id}
-              title={collection.title}
-              items={collection.items}
-              routeName={collection.routeName}
-            />
-          )
-        })}
-      </div>
+      <React.Fragment>
+        {this.state.loading ?
+          <div className="loader"></div>
+          :
+          <div className="collections-overview">
+            {collectionsArray.map(collection => {
+              return (
+                <PreviewCollection
+                  key={collection.id}
+                  title={collection.title}
+                  items={collection.items}
+                  routeName={collection.routeName}
+                />
+              )
+            })}
+          </div>
+        }
+      </React.Fragment>
     );
   }
 }
