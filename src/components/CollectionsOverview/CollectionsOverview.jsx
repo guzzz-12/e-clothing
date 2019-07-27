@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import PreviewCollection from "../PreviewCollection/PreviewCollection";
 import {firestore, convertSnapshot} from "../../firebase/firebaseUtils";
 import { getShopDataFromFirestore } from '../../redux/shopData/shopDataAction';
+import Spinner from "../Spinner/Spinner";
 
 class CollectionsOverview extends React.Component {
   state = {
@@ -38,7 +39,7 @@ class CollectionsOverview extends React.Component {
     return (
       <React.Fragment>
         {this.state.loading ?
-          <div className="loader"></div>
+          <Spinner />
           :
           <div className="collections-overview">
             {collectionsArray.map(collection => {

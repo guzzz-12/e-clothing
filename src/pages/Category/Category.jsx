@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import CollectionItem from "../../components/CollectionItem/CollectionItem";
 import {firestore, convertSnapshot} from "../../firebase/firebaseUtils";
 import { getShopDataFromFirestore } from '../../redux/shopData/shopDataAction';
+import Spinner from "../../components/Spinner/Spinner";
 
 class Category extends React.Component {
   state = {
@@ -43,7 +44,7 @@ class Category extends React.Component {
     return (
       <React.Fragment>
         {this.state.loading ?
-          <div className="loader"></div>
+          <Spinner />
           :
           <div className="collection-page">
             <h2 className="title">{this.props.categoryTitle}</h2>
