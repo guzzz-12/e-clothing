@@ -14,7 +14,8 @@ import { getShopDataFromFirestore } from "./redux/shopData/shopDataAction";
 
 class App extends React.Component {
   state = {
-    loading: true
+    loading: true,
+    error: null
   }
 
   unsubscribeFromAuth = null;
@@ -36,15 +37,15 @@ class App extends React.Component {
 
     //Tomar el shopData desde la base de datos
     const collectionRef = firestore.collection("collections");
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(snapshot => {
       let collectionsObj = {};
-      const collectionsArray = await convertSnapshot(snapshot);
+      const collectionsArray = convertSnapshot(snapshot);
       for(let collection of collectionsArray) {
         collectionsObj[collection.routeName] = collection
       }
       this.setState({loading: false})
       this.props.getShopData(collectionsObj)
-    })
+    }, (error) => this.setState({loading: false, error: error.message}))
 
     //Agregar el shopData a la base de datos
     // let shopDataArray = [];
@@ -64,27 +65,40 @@ class App extends React.Component {
     this.unsubscribeFromSnapshot()
   }
 
+  renderContent = () => {
+    const {loading, error} = this.state;
+    if(loading && !error) {
+      return <div className="loader"></div>
+    } else if (!loading && error) {
+      return (
+        <div className="errorMessage">
+          <span>{error}</span>
+        </div>
+      )
+    } else if (!loading && !error) {
+      return (
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
+          <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
+          <Route exact path="/checkout" component={Checkout} />
+          <Route
+            exact
+            path="/signin"
+            render={() => {
+              return this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
+            }}
+          />
+        </Switch>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
         <Header/>
-        {this.state.loading ?
-          <div className="loader"></div>
-          :
-          <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
-            <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
-            <Route exact path="/checkout" component={Checkout} />
-            <Route
-              exact
-              path="/signin"
-              render={() => {
-                return this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
-              }}
-            />
-          </Switch>
-        }
+        {this.renderContent()}
       </div>
     )    
   }
