@@ -6,6 +6,10 @@ import {firestore, convertSnapshot} from "../../firebase/firebaseUtils";
 import { getShopDataFromFirestore } from '../../redux/shopData/shopDataAction';
 
 class Category extends React.Component {
+  state = {
+    loading: true
+  }
+
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
@@ -20,7 +24,7 @@ class Category extends React.Component {
         collectionsObj[collection.routeName] = collection
       }
 
-      // this.setState({loading: false})
+      this.setState({loading: false})
       this.props.getCategoryData(collectionsObj)
     })
   }
@@ -37,12 +41,18 @@ class Category extends React.Component {
 
   render() {  
     return (
-      <div className="collection-page">
-        <h2 className="title">{this.props.categoryTitle}</h2>
-        <div className="items">
-          {this.renderItems()}
-        </div>
-      </div>
+      <React.Fragment>
+        {this.state.loading ?
+          <div className="loader"></div>
+          :
+          <div className="collection-page">
+            <h2 className="title">{this.props.categoryTitle}</h2>
+            <div className="items">
+              {this.renderItems()}
+            </div>
+          </div>
+        }
+      </React.Fragment>
     );
   };
 }
