@@ -17,6 +17,8 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+
+//Agregar los nuevos usuarios a la base de datos
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -41,6 +43,38 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 }
 
+
+//Agregar nuevas colecciones a la base de datos
+export const addCollectionAndDocuments = async (collectionName, collectionDocs) => {
+  const collectionRef = firestore.collection(collectionName);
+  const batch = firestore.batch();
+
+  collectionDocs.forEach(el => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, el)
+  })
+
+  return await batch.commit()
+}
+
+
+//Tomar el shopData de la base de datos y crear un objeto nuevo por cada documento
+export const convertSnapshot = (collections) => {
+  const tranformedCollection = collections.docs.map(doc => {
+    return {
+      routeName: encodeURI(doc.data().title.toLowerCase()),
+      id: doc.id,
+      title: doc.data().title,
+      items: doc.data().items
+    }
+  });
+
+  console.log(tranformedCollection);
+  return tranformedCollection;
+}
+
+
+//Autenticación con google
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({prompt: "select_account"});
 

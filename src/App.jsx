@@ -5,7 +5,7 @@ import {Route, Switch, Redirect} from "react-router-dom";
 import Shop from './pages/Shop/Shop';
 import Header from './components/Header/Header';
 import SignInAndSignUp from './pages/SignInAndSignUp/SignInAndSignUp';
-import {auth, createUserProfileDocument} from "./firebase/firebaseUtils";
+import {auth, createUserProfileDocument, firestore, convertSnapshot} from "./firebase/firebaseUtils";
 import {connect} from "react-redux";
 import {setCurrentUser} from "./redux/user/userActions";
 import Checkout from "./pages/Checkout/Checkout";
@@ -13,8 +13,10 @@ import Category from "./pages/Category/Category";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
+  unsubscribeFromSnapshot = null;
 
   componentDidMount() {
+    
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
       if(user) {
         const userRef = await createUserProfileDocument(user);
@@ -27,10 +29,29 @@ class App extends React.Component {
       }
       this.props.getUser(user);
     })
+
+    //Tomar el shopData desde la base de datos
+    const collectionRef = firestore.collection("collections");
+    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+      convertSnapshot(snapshot)
+    })
+
+    //Agregar el shopData a la base de datos
+    // let shopDataArray = [];
+    // for(let key in this.props.shopData) {
+    //   shopDataArray.push({
+    //     title: this.props.shopData[key].title,
+    //     items: this.props.shopData[key].items
+    //   })
+    // };
+    
+    //Importar desde firebaseUtils:
+    // addCollectionAndDocuments("collections", shopDataArray);
   }
 
   componentWillUnmount() {
-    this.unsubscribeFromAuth()
+    this.unsubscribeFromAuth();
+    this.unsubscribeFromSnapshot()
   }
 
   render() {
@@ -39,8 +60,8 @@ class App extends React.Component {
         <Header/>
         <Switch>
           <Route exact path="/" component={HomePage}/>
-          <Route exact path="/shop" component={Shop}/>
-          <Route exact path="/shop/:category" component={Category}/>
+          <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
+          <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
           <Route exact path="/checkout" component={Checkout} />
           <Route
             exact
@@ -65,7 +86,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    // shopData: state.shopData
   }
 }
 
