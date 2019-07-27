@@ -7,10 +7,9 @@ import {addItem} from "../../redux/cart/cartAction";
 const CollectionItem = (props) => {
   return (
     <div className="collection-item">
-      <div
-        className="image"
-        style={{backgroundImage: `url(${props.item.imageUrl})`}}
-      />
+      <div className="img-container">
+        <img className="image" src={props.item.imageUrl} alt={props.item.name}/>
+      </div>
       <div className="collection-footer">
         <span className="name">{props.item.name}</span>
         <span className="price">${props.item.price}</span>

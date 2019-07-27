@@ -6,13 +6,25 @@
   height: 350px;
   align-items: center;
 
-  .image {
+  .img-container {
+    position: relative;
     width: 100%;
     height: 95%;
-    background-size: cover;
-    background-position: center;
     margin-bottom: 5px;
+    border: 1px solid lightgrey;
+    overflow: hidden;
+    
+    .image {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+    }
   }
+
 
   .custom-button {
     display: none;
