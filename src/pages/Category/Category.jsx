@@ -23,8 +23,8 @@ const Category = (props) => {
 const mapStateToProps = (state, ownProps) => {
   const selectedCategory = state.shopData[ownProps.match.params.category];
   return {
-    categoryItems: selectedCategory.items,
-    categoryTitle: selectedCategory.title
+    categoryItems: selectedCategory ? selectedCategory.items : [],
+    categoryTitle: selectedCategory ? selectedCategory.title : null
   }
 }
 
