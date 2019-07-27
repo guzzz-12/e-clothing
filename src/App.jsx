@@ -13,11 +13,14 @@ import Category from "./pages/Category/Category";
 import { getShopDataFromFirestore } from "./redux/shopData/shopDataAction";
 
 class App extends React.Component {
+  state = {
+    loading: true
+  }
+
   unsubscribeFromAuth = null;
   unsubscribeFromSnapshot = null;
 
-  componentDidMount() {
-    
+  componentDidMount() {    
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
       if(user) {
         const userRef = await createUserProfileDocument(user);
@@ -39,7 +42,7 @@ class App extends React.Component {
       for(let collection of collectionsArray) {
         collectionsObj[collection.routeName] = collection
       }
-      
+      this.setState({loading: false})
       this.props.getShopData(collectionsObj)
     })
 
@@ -65,19 +68,23 @@ class App extends React.Component {
     return (
       <div>
         <Header/>
-        <Switch>
-          <Route exact path="/" component={HomePage}/>
-          <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
-          <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
-          <Route exact path="/checkout" component={Checkout} />
-          <Route
-            exact
-            path="/signin"
-            render={() => {
-              return this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
-            }}
-          />
-        </Switch>
+        {this.state.loading ?
+          <div className="loader"></div>
+          :
+          <Switch>
+            <Route exact path="/" component={HomePage}/>
+            <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
+            <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
+            <Route exact path="/checkout" component={Checkout} />
+            <Route
+              exact
+              path="/signin"
+              render={() => {
+                return this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
+              }}
+            />
+          </Switch>
+        }
       </div>
     )    
   }
