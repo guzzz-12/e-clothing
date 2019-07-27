@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {setCurrentUser} from "./redux/user/userActions";
 import Checkout from "./pages/Checkout/Checkout";
 import Category from "./pages/Category/Category";
+import { getShopDataFromFirestore } from "./redux/shopData/shopDataAction";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -33,7 +34,13 @@ class App extends React.Component {
     //Tomar el shopData desde la base de datos
     const collectionRef = firestore.collection("collections");
     this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      convertSnapshot(snapshot)
+      let collectionsObj = {};
+      const collectionsArray = await convertSnapshot(snapshot);
+      for(let collection of collectionsArray) {
+        collectionsObj[collection.routeName] = collection
+      }
+      
+      this.props.getShopData(collectionsObj)
     })
 
     //Agregar el shopData a la base de datos
@@ -80,6 +87,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (user) => {
       dispatch(setCurrentUser(user))
+    },
+    getShopData: (shopData) => {
+      dispatch(getShopDataFromFirestore(shopData))
     }
   }
 }
