@@ -5,20 +5,15 @@ import {Route, Switch, Redirect} from "react-router-dom";
 import Shop from './pages/Shop/Shop';
 import Header from './components/Header/Header';
 import SignInAndSignUp from './pages/SignInAndSignUp/SignInAndSignUp';
-import {auth, createUserProfileDocument, firestore, convertSnapshot} from "./firebase/firebaseUtils";
+import {auth, createUserProfileDocument} from "./firebase/firebaseUtils";
 import {connect} from "react-redux";
 import {setCurrentUser} from "./redux/user/userActions";
 import Checkout from "./pages/Checkout/Checkout";
 import Category from "./pages/Category/Category";
-import { getShopDataFromFirestore } from "./redux/shopData/shopDataAction";
 
 class App extends React.Component {
-  state = {
-    loading: true
-  }
 
   unsubscribeFromAuth = null;
-  unsubscribeFromSnapshot = null;
 
   componentDidMount() {    
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
@@ -32,18 +27,6 @@ class App extends React.Component {
         }));
       }
       this.props.getUser(user);
-    })
-
-    //Tomar el shopData desde la base de datos
-    const collectionRef = firestore.collection("collections");
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      let collectionsObj = {};
-      const collectionsArray = await convertSnapshot(snapshot);
-      for(let collection of collectionsArray) {
-        collectionsObj[collection.routeName] = collection
-      }
-      this.setState({loading: false})
-      this.props.getShopData(collectionsObj)
     })
 
     //Agregar el shopData a la base de datos
@@ -61,30 +44,25 @@ class App extends React.Component {
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
-    this.unsubscribeFromSnapshot()
   }
 
   render() {
     return (
       <div>
         <Header/>
-        {this.state.loading ?
-          <div className="loader"></div>
-          :
-          <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
-            <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
-            <Route exact path="/checkout" component={Checkout} />
-            <Route
-              exact
-              path="/signin"
-              render={() => {
-                return this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
-              }}
-            />
-          </Switch>
-        }
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/shop" render={(props) => <Shop {...props} />}/>
+          <Route exact path="/shop/:category" render={(props) => <Category {...props} />}/>
+          <Route exact path="/checkout" component={Checkout} />
+          <Route
+            exact
+            path="/signin"
+            render={() => {
+              return this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
+            }}
+          />
+        </Switch>
       </div>
     )    
   }
@@ -94,9 +72,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (user) => {
       dispatch(setCurrentUser(user))
-    },
-    getShopData: (shopData) => {
-      dispatch(getShopDataFromFirestore(shopData))
     }
   }
 }
