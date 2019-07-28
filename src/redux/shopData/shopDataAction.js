@@ -15,6 +15,7 @@ export const fetchCollectionsSuccess = (data) => {
 }
 
 export const fetchCollectionsError = (errorMessage) => {
+  console.log(errorMessage)
   return {
     type: shopDataActionTypes.GET_COLLECTIONS_ERROR,
     payload: errorMessage
