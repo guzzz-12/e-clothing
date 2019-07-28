@@ -1,8 +1,41 @@
 import { shopDataActionTypes } from "./shopDataTypes";
+import {firestore, convertSnapshot} from "../../firebase/firebaseUtils";
 
-export const getShopDataFromFirestore = (shopData) => {
+export const fetchCollectionsStart = () => {
   return {
-    type: shopDataActionTypes.ADD_DATA_FROM_FIRESTORE,
-    payload: shopData
+    type: shopDataActionTypes.GET_COLLECTIONS_START
+  }
+}
+
+export const fetchCollectionsSuccess = (data) => {
+  return {
+    type: shopDataActionTypes.GET_COLLECTIONS_SUCCESS,
+    payload: data
+  }
+}
+
+export const fetchCollectionsError = (errorMessage) => {
+  return {
+    type: shopDataActionTypes.GET_COLLECTIONS_ERROR,
+    payload: errorMessage
+  }
+}
+
+export const fetchCollectionsStartAsync = () => {
+  return (dispatch) => {
+    const collectionRef = firestore.collection("collections");
+    dispatch(fetchCollectionsStart())
+    collectionRef.get()
+    .then((snapshot) => {
+      let collectionsObj = {};
+      const collectionsArray = convertSnapshot(snapshot);
+      for(let collection of collectionsArray) {
+        collectionsObj[collection.routeName] = collection
+      }
+      dispatch(fetchCollectionsSuccess(collectionsObj))
+    })
+    .catch(err => {
+      dispatch(fetchCollectionsError(err.message))
+    })
   }
 }
