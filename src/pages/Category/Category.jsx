@@ -2,36 +2,12 @@ import React from 'react';
 import "./category.scss";
 import {connect} from "react-redux";
 import CollectionItem from "../../components/CollectionItem/CollectionItem";
-import {firestore, convertSnapshot} from "../../firebase/firebaseUtils";
-import { getShopDataFromFirestore } from '../../redux/shopData/shopDataAction';
+import {fetchCollectionsStartAsync} from '../../redux/shopData/shopDataAction';
 import Spinner from "../../components/Spinner/Spinner";
 
 class Category extends React.Component {
-  state = {
-    loading: true
-  }
-
-  unsubscribeFromSnapshot = null;
-
   componentDidMount() {
-    //Tomar el shopData desde la base de datos
-    const collectionRef = firestore.collection("collections");
-
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      let collectionsObj = {};
-
-      const collectionsArray = await convertSnapshot(snapshot);
-      for(let collection of collectionsArray) {
-        collectionsObj[collection.routeName] = collection
-      }
-
-      this.setState({loading: false})
-      this.props.getCategoryData(collectionsObj)
-    })
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromSnapshot()
+    this.props.getCategoryData()
   }
 
   renderItems = () => {
@@ -40,10 +16,10 @@ class Category extends React.Component {
     })
   }
 
-  render() {  
+  render() {
     return (
       <React.Fragment>
-        {this.state.loading ?
+        {this.props.isLoading ?
           <Spinner />
           :
           <div className="collection-page">
@@ -59,17 +35,19 @@ class Category extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const selectedCategory = state.shopData[ownProps.match.params.category];
+  console.log(state.shopData.shopData)
+  const selectedCategory = state.shopData.shopData[ownProps.match.params.category];
   return {
     categoryItems: selectedCategory ? selectedCategory.items : [],
-    categoryTitle: selectedCategory ? selectedCategory.title : null
+    categoryTitle: selectedCategory ? selectedCategory.title : null,
+    isLoading: state.shopData.isFetching
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCategoryData: (data) => {
-      dispatch(getShopDataFromFirestore(data))
+    getCategoryData: () => {
+      dispatch(fetchCollectionsStartAsync())
     }
   }
 }
