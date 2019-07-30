@@ -5,6 +5,7 @@ import CheckoutItem from "../../components/CheckoutItem/CheckoutItem";
 import StripeBtn from "../../components/StripeBtn/StripeBtn";
 
 const Checkout = (props) => {
+  document.title = "Crown | Checkout"
   const totalPrice = () => {
     let count = 0;
     for(let item of props.items) {

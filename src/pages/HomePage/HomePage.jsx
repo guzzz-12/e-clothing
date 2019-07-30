@@ -3,6 +3,7 @@ import "./homepage.scss";
 import Directory from '../../components/Directory/Directory';
 
 const HomePage = () => {
+  document.title = "Crown | Online Clothing Store"
   return (
     <div className="homepage">
       <Directory />

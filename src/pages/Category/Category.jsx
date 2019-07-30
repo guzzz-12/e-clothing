@@ -9,13 +9,14 @@ class Category extends React.Component {
   componentDidMount() {
     this.props.getCategoryData()
   }
-
+  
   renderItems = () => {
     return this.props.categoryItems.map(item => {
+      document.title = `Crown | Shop: ${this.props.categoryTitle}`
       return <CollectionItem key={item.id} item={item} />
     })
   }
-
+  
   render() {
     return (
       <React.Fragment>
