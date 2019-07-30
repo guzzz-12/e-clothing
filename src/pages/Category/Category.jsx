@@ -36,7 +36,6 @@ class Category extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.shopData.shopData)
   const selectedCategory = state.shopData.shopData[ownProps.match.params.category];
   return {
     categoryItems: selectedCategory ? selectedCategory.items : [],

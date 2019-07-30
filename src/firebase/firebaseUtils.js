@@ -68,8 +68,6 @@ export const convertSnapshot = (collections) => {
       items: doc.data().items
     }
   });
-
-  console.log(tranformedCollection);
   return tranformedCollection;
 }
 
