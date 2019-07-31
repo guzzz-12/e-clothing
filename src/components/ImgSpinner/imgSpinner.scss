@@ -1,0 +1,29 @@
+.img-loader-container {
+  position: absolute;
+  z-index: 10000;
+  
+  .loader {
+    position: relative;
+    display: inline-block;
+    width: 25%;
+    height: 140px;
+    padding: 30px;
+    box-sizing: border-box;
+  }
+
+  .circle {
+    box-sizing: border-box;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    border: 10px solid rgba(0, 0, 0, 0.15);
+    border-top-color: #000;
+    animation: spin 1s infinite linear;
+  }
+}
+
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+} 
