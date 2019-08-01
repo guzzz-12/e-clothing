@@ -15,6 +15,18 @@
   font-weight: bolder;
   border: none;
   cursor: pointer;
+  
+  &--disabled {
+    padding: 0 35px 0 35px;
+    font-family: 'Open Sans Condensed';
+    font-size: 15px;
+    font-weight: bolder;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 50px;
+    background-color: white;
+    border: 1px solid lightgray;
+  }
 
   &:hover {
     background-color: white;
