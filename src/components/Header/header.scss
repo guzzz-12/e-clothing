@@ -3,16 +3,30 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
 
+  .userName {
+    padding: 10px 15px;
+  }
+
   .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    width: 70px;
-    padding: 25px;
+    width: 60px;
+
+    img {
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+    }
   }
 
   .options {
-    width: 50%;
+    // width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
