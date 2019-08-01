@@ -19,13 +19,14 @@ const CartDropdown = (props) => {
         }
       </div>
       <CustomBtn
+        disabled={props.items.length <= 0 ? true : false}
         onClick={() => {
             props.history.push("/checkout")
             props.hideDropdown()
           }
         }
       >
-        Go to checkout
+        {props.items.length > 0 ? "Go to checkout" : "Start adding items"}
       </CustomBtn>
     </div>
   );
