@@ -19,14 +19,14 @@ const CartDropdown = (props) => {
         }
       </div>
       <CustomBtn
-        disabled={props.items.length <= 0 ? true : false}
+        disabled={props.items.length <= 0 || !props.currentUser ? true : false}
         onClick={() => {
             props.history.push("/checkout")
             props.hideDropdown()
           }
         }
       >
-        {props.items.length > 0 ? "Go to checkout" : "Start adding items"}
+        {props.items.length > 0 && props.currentUser ? "Go to checkout" : "Start adding items"}
       </CustomBtn>
     </div>
   );
@@ -34,7 +34,8 @@ const CartDropdown = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.cartDropdown.cartItems
+    items: state.cartDropdown.cartItems,
+    currentUser: state.user.currentUser
   }
 }
 
