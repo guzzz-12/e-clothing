@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {setCurrentUser} from "./redux/user/userActions";
 import Checkout from "./pages/Checkout/Checkout";
 import Category from "./pages/Category/Category";
+import {emptyCart} from "./redux/cart/cartAction";
 
 class App extends React.Component {
 
@@ -25,6 +26,9 @@ class App extends React.Component {
             ...snapshot.data()
           })
         }));
+      }
+      if(!user) {
+        this.props.clearCart()
       }
       this.props.getUser(user);
     })
@@ -72,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (user) => {
       dispatch(setCurrentUser(user))
+    },
+    clearCart: () => {
+      dispatch(emptyCart())
     }
   }
 }

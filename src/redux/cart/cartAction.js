@@ -26,3 +26,9 @@ export const removeItem = (item) => {
     payload: item.id
   }
 }
+
+export const emptyCart = () => {
+  return {
+    type: cartActionTypes.EMPTY_CART
+  }
+}
