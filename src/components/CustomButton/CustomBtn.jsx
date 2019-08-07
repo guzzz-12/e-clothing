@@ -7,7 +7,7 @@ const CustomBtn = (props) => {
   return (
     <button
       disabled={props.disabled}
-      className={`${props.isGoogleSignedIn ? "google-sign-in" : ""} ${props.inverted ? "inverted" : ""} ${!props.disabled ? "custom-button" : "custom-button--disabled"}`} {...rest}>
+      className={`${props.isGoogleSignedIn ? "google-sign-in" : ""} ${props.inverted ? "inverted" : ""} ${!props.disabled ? "custom-button" : "custom-button custom-button--disabled"}`} {...rest}>
       {children}
     </button>
   );

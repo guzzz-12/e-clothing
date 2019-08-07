@@ -16,8 +16,9 @@ const CollectionItem = (props) => {
       </div>
       <CustomBtn
         onClick={()=> props.addItem(props.item)}
+        disabled={props.currentUser ? false : true}
         inverted
-      >Add to cart
+      >{props.currentUser ? "Add to cart" : "Login to start shopping!"}
       </CustomBtn>
     </div>
   );
@@ -31,4 +32,10 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
