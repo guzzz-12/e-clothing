@@ -8,7 +8,7 @@ import {showHideDropdown} from "../../redux/cart/cartAction";
 
 const CartDropdown = (props) => {
   return (
-    <div className="cart-dropdown">
+    <div className={`cart-dropdown ${props.currentUser && "cart-dropdown--logged"}`}>
       <div className="cart-items">
         {
           props.items.length > 0 ?
