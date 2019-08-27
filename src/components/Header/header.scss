@@ -38,3 +38,39 @@
     }
   }
 }
+
+@media screen and (max-width: 530px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    margin-bottom: 0;
+    .logo-container {
+      margin-bottom: 20px;
+    }
+    .options {
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .header {
+    flex-direction: column;
+
+    .options {
+      flex-wrap: wrap;
+
+      .option {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid lightgray;
+      }
+
+      .cart-icon {
+        margin: 0 auto;
+      }
+    }
+  }
+}
