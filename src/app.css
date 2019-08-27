@@ -1,5 +1,6 @@
 body {
   font-family: 'Open Sans Condensed', sans-serif;
+  min-width: 320px;
   padding: 20px 60px;
 }
 
@@ -28,4 +29,10 @@ a {
 .errorMessage span {
   font-weight: bold;
   font-size: 18px;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
 }
