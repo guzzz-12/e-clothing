@@ -7,7 +7,7 @@ const PreviewCollection = (props) => {
   return (
     <div className="collection-preview">
       <h1 className="title">{props.title.toUpperCase()}</h1>
-      <Link to={`/shop/${props.routeName}`} style={{marginBottom: "25px"}}>
+      <Link to={`/shop/${props.routeName}`}>
         <span>See full collection...</span>
       </Link>
       <div className="preview">
