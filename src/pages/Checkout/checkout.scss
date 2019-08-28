@@ -11,15 +11,16 @@
     justify-content: space-between;
     width: 100%;
     padding: 10px 0;
+    border-top: 1px solid darkgrey;
     border-bottom: 1px solid darkgrey;
 
     .header-block {
       text-transform: capitalize;
-      width: 23%;
+      // width: 23%;
 
-      &:last-child {
-        width: 8%;
-      }
+      // &:last-child {
+      //   width: 8%;
+      // }
     }
   }
 
@@ -42,5 +43,12 @@
       margin: 10px 0 0 0;
       font-weight: bold;
     }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .checkout-page {
+    width: 100%;
+    margin: 45px 0;
   }
 }
