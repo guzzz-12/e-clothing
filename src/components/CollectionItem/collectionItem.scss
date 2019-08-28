@@ -67,6 +67,10 @@
 @media screen and (max-width: 950px) {
   .collection-item {
     flex-basis: 50%;
+
+    .custom-button {
+      display: flex;
+    }
   }
 }
 
