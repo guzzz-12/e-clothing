@@ -14,6 +14,20 @@
   flex-wrap: wrap;
 }
 
+@media screen and (max-width: 880px) {
+  .buttons {
+    justify-content: center;
+  }
+  
+  .buttons button {
+    width: 100%;
+  }
+  
+  .buttons button:first-of-type {
+    margin-bottom: 1rem;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .sign-in {
     width: 100%;
